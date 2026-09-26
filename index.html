@@ -7,14 +7,14 @@
 .wrap{width:min(100%,1500px);margin:auto;padding:16px clamp(8px,1.5vw,18px) 50px}
 h1{font-size:24px;margin:0 0 3px}.sub,.hint{font-size:11px;color:var(--muted)}
 .hero{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:11px}
-.panel{background:#fff;border:1px solid var(--line);border-radius:14px}.filters{padding:12px;margin-bottom:10px}
-.top{display:grid;grid-template-columns:2fr .8fr .8fr 1fr 1fr;gap:8px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px}.filters{padding:10px;margin-bottom:9px}
+.top{display:grid;grid-template-columns:1.15fr .72fr .72fr .9fr 1.18fr .82fr;gap:7px}
 label.head,.gt{display:block;font-size:11px;font-weight:800;margin:0 0 4px;color:#4b5563}
 input[type=text],select{width:100%;border:1px solid #d5d9df;border-radius:8px;background:#fff;padding:8px 9px;font-size:12px}
 .dates{margin-top:9px}.date-list,.opts{display:flex;gap:5px;flex-wrap:wrap}
 .chip{display:inline-flex;align-items:center;gap:4px;padding:5px 7px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:10px;white-space:nowrap}
-.chip input{margin:0}.groups{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:9px}
-.group{border:1px solid var(--line);border-radius:10px;padding:8px}.eq{background:#fafafa}.au{background:var(--blue)}.fmt{background:var(--orange)}.seat{background:var(--purple)}
+.chip input{margin:0}.groups{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:8px}
+.group{border:1px solid var(--line);border-radius:10px;padding:7px}.eq{background:#fafafa}.au{background:var(--blue)}.fmt{background:var(--orange)}.seat{background:var(--purple)}
 .gt{margin-bottom:5px}.rule{font-size:10px;color:var(--muted);margin-top:6px}.extra{display:flex;gap:12px;flex-wrap:wrap;margin-top:9px;padding-top:8px;border-top:1px solid var(--line);font-size:11px}
 .toolbar{display:flex;justify-content:space-between;gap:8px;padding:9px 11px;border-bottom:1px solid var(--line)}.count{font-weight:800}
 .tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:1120px}
@@ -33,7 +33,7 @@ td{font-size:12px;padding:9px 10px;border-bottom:1px solid var(--line);vertical-
  .wrap{padding:8px 7px 30px}.hero{display:block}h1{font-size:19px}.hero>.sub{display:none}
  .mobile-toggle{display:block;width:100%;padding:8px 9px;border:1px solid var(--line);border-radius:8px;background:#fff;font-weight:700;text-align:left;margin-bottom:6px}
  .filters.collapsed .top,.filters.collapsed .dates,.filters.collapsed .groups,.filters.collapsed .extra{display:none}
- .top{grid-template-columns:1fr 1fr}.top .search{grid-column:1/-1}.groups{grid-template-columns:1fr}.date-list{flex-wrap:nowrap;overflow:auto}
+ .top{grid-template-columns:1fr 1fr}.top .search{grid-column:auto}.top .hour-top{grid-column:1/-1}.groups{grid-template-columns:1fr}.date-list{flex-wrap:nowrap;overflow:auto}
  .cards{grid-template-columns:1fr;padding:5px}.toolbar{flex-direction:column}.card{padding:8px}
 }
 
@@ -52,6 +52,9 @@ td{font-size:12px;padding:9px 10px;border-bottom:1px solid var(--line);vertical-
 .buybtn{display:inline-block;padding:6px 9px;border:1px solid var(--line);border-radius:8px;text-decoration:none;font-weight:800;font-size:10px;color:var(--text);background:#fff;white-space:nowrap}
 .buybtn:hover{background:#f3f4f6}
 .card-buy{margin-top:8px}
+
+.hour-range{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:4px}
+.hour-range select{min-width:0;padding-left:6px;padding-right:6px}.hour-top{min-width:0}
 </style></head>
 <body><div class="wrap" id="app">
 <div class="hero"><div><h1>東京・神奈川 上映環境比較</h1><div class="sub">TOHO / 109 / SMT / シネマサンシャイン / KINEZO・T・ジョイ / イオンシネマ　設備・音響・座席料金で比較</div></div><div class="sub">固定UI v2・6系列自動生成版</div></div>
@@ -62,7 +65,8 @@ td{font-size:12px;padding:9px 10px;border-bottom:1px solid var(--line);vertical-
  <div><label class="head">系列</label><select id="chain"><option value="">すべて</option></select></div>
  <div><label class="head">都県</label><select id="pref"><option value="">東京・神奈川</option><option>東京都</option><option>神奈川県</option></select></div>
  <div><label class="head">市区町村</label><select id="municipality"><option value="">すべて</option></select></div>
- <div><label class="head">並び替え</label><select id="sort"><option value="time">上映開始順</option><option value="width">スクリーン幅順</option><option value="seats">座席数順</option><option value="title">作品名順</option><option value="price">座席料金順</option></select></div>
+ <div class="hour-top"><label class="head">上映開始時間</label><div class="hour-range"><select id="hourFrom" aria-label="開始時刻"></select><span>〜</span><select id="hourTo" aria-label="終了時刻"></select></div></div>
+ <div><label class="head">並び替え</label><select id="sort"><option value="seats" selected>座席数順</option><option value="time">上映開始順</option><option value="width">スクリーン幅順</option><option value="title">作品名順</option><option value="price">座席料金順</option></select></div>
 </div>
 <div class="dates"><span class="head">上映日（最大3日）</span><div id="dates" class="date-list"></div>
 <details id="dateMore" class="date-more"><summary>それ以降の日付を表示</summary><div id="datesMore" class="date-list"></div></details>
@@ -142,6 +146,9 @@ function filterRows(){
  if(eq.length)a=a.filter(r=>eq.some(v=>(r.filter_equipment||r.equipment).includes(v)));
  if(au.length)a=a.filter(r=>au.some(v=>(r.filter_audio||r.audio).includes(v)));
  if(fm.length)a=a.filter(r=>fm.some(v=>r.presentation.includes(v)));
+ const hf=$('hourFrom').value, ht=$('hourTo').value;
+ if(hf!=='') a=a.filter(r=>screeningStartMinutes(r)>=Number(hf)*60);
+ if(ht!=='') a=a.filter(r=>screeningStartMinutes(r)<Number(ht)*60);
  if(sb.length)a=a.filter(r=>sb.some(v=>(r.seat_filter_bands||[]).includes(v)));
  if($('paidOnly').checked)a=a.filter(r=>r.paid);
  const map=new Map();
@@ -171,10 +178,31 @@ function buy(r){
  if(!u)return '<span class="meta">リンクなし</span>';
  return `<a class="buybtn" href="${esc(u)}" target="_blank" rel="noopener noreferrer">劇場ページ</a>`
 }
+
+function setupHourFilter(){
+ const f=$('hourFrom'), t=$('hourTo');
+ f.innerHTML='<option value="">指定なし</option>';
+ t.innerHTML='<option value="">指定なし</option>';
+ for(let h=0;h<=23;h++){
+   f.insertAdjacentHTML('beforeend','<option value="'+h+'">'+String(h).padStart(2,'0')+':00</option>');
+ }
+ for(let h=1;h<=24;h++){
+   const label=(h===24?'24':String(h).padStart(2,'0'))+':00';
+   t.insertAdjacentHTML('beforeend','<option value="'+h+'">'+label+'</option>');
+ }
+}
+function screeningStartMinutes(r){
+ const m=String(r.start||'').match(/^(\d{1,2}):(\d{2})/);
+ return m ? Number(m[1])*60+Number(m[2]) : -1;
+}
 function render(){rebuildMunicipalities();const rows=filterRows();$('count').textContent=rows.length+'件';$('empty').style.display=rows.length?'none':'block';
  $('tbody').innerHTML=rows.map(r=>`<tr><td><div class="title">${esc(r.title)}</div><div class="meta">${dlabel(r.date)}</div></td><td><b>${esc(r.municipality)}</b><div class="meta">${esc(r.prefecture)}</div></td><td>${esc(r.theater)}<div class="meta">${esc(r.chain)} · ${esc(r.screen)}</div></td><td>${size(r)}</td><td><div class="badges">${env(r)}</div></td><td><div class="badges">${paid(r)}</div></td><td><div class="times">${r.times.map(t=>`<span class="time${t.past?' past':''}">${t.start}</span>`).join('')}</div></td><td>${buy(r)}</td></tr>`).join('');
  $('cards').innerHTML=rows.map(r=>`<article class="card"><div class="card-head"><div><div class="card-title">${esc(r.title)}</div><div class="card-place">${dlabel(r.date)} · ${esc(r.municipality)}<br>${esc(r.theater)} · ${esc(r.screen)}</div></div><div class="card-size">${r.width==null?'非公表':Number(r.width).toFixed(1)+'m'}<div class="meta">${r.seats??'—'}席</div></div></div><div class="card-row"><span class="label">環境</span><div class="badges">${env(r)}</div></div>${r.paid?`<div class="card-row"><span class="label">座席</span><div class="badges">${paid(r)}</div></div>`:''}<div class="card-row"><span class="label">時間</span><div class="times">${r.times.map(t=>`<span class="time${t.past?' past':''}">${t.start}</span>`).join('')}</div><div class="card-buy">${buy(r)}</div></div></article>`).join('');
 }
 document.addEventListener('change',e=>{if(e.target.classList.contains('datef')){const v=vals('datef');if(v.length>3){e.target.checked=false;alert('上映日は最大3日までです');return}if(!v.length){e.target.checked=true;return}}if(e.target.matches('input,select'))render()});
-$('q').addEventListener('input',render);$('toggle').addEventListener('click',()=>{$('filters').classList.toggle('collapsed');$('toggle').textContent=$('filters').classList.contains('collapsed')?'絞り込み条件を表示':'絞り込み条件を隠す'});render();setInterval(render,60000);
+$('q').addEventListener('input',render);$('toggle').addEventListener('click',()=>{$('filters').classList.toggle('collapsed');$('toggle').textContent=$('filters').classList.contains('collapsed')?'絞り込み条件を表示':'絞り込み条件を隠す'});$('sort').value='seats';
+setupHourFilter();
+$('hourFrom').addEventListener('change',render);
+$('hourTo').addEventListener('change',render);
+render();setInterval(render,60000);
 </script></body></html>
